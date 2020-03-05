@@ -10,6 +10,9 @@ app.on('ready', () => {
       
   });
 
+  mainWindow.setMenuBarVisibility(false)
+
+
 
   mainWindow.loadFile(__dirname+'/index.html')
 });

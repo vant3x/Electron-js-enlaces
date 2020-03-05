@@ -8,6 +8,7 @@ const btnClearStorage = document.querySelector('.btn-clear-storage');
 
 // DOM APIs
 const parser = new DOMParser();
+ const { shell } = require('electron');
 const parserResponse = text => {
    return  parser.parseFromString(text, 'text/html');
 }
@@ -31,7 +32,7 @@ const createLinkElement = link => {
         <div>
             <h3>${link.title}</h3>
             <p>
-                <a href="${link.url}">${link.url}</a>
+                <a href="${link.url}" class="enlace">${link.url}</a>
             </p>
         </div>
     `;
@@ -41,6 +42,19 @@ const renderLinks = () => {
    const linksElements =  getLinksStorage().map(createLinkElement).join('');
    linksSection.innerHTML = linksElements;
    
+}
+
+const clearForm = () => {
+    inputNewLinkUrl.value = null;
+}
+
+const handleError = (error, url) => {
+   errorMessage.innerHTML = `
+        Ocurrió un error y no se pudó agregar el enlace "${url}" : ${error.message}
+   `.trim();
+   setTimeout(() => {
+       errorMessage.innerHTML = null;
+   },   5000);                      
 }
 
 // Events
@@ -60,10 +74,28 @@ inputNewLinkUrl.addEventListener('keyup', () => {
 newLinkForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const url = inputNewLinkUrl.value;
-    const response = await fetch(url);
-    const text = await response.text();
-    const html = parserResponse(text);
-    const title = findTitle(html);
-    storeLink(title, url);
-    renderLinks();
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const html = parserResponse(text);
+        const title = findTitle(html);
+        storeLink(title, url);
+        clearForm();
+        renderLinks();
+    } catch (error) {
+        handleError(error, url);
+    }
+});
+
+btnClearStorage.addEventListener('click', () => {
+    localStorage.clear();
+    linksSection.innerHTML = '';
+});
+
+
+linksSection.addEventListener('click', (e) => {
+    if (e.target.href) {
+        e.preventDefault();
+        shell.openExternal(e.target.href);
+    }
 });

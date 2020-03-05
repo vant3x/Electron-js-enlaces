@@ -56,3 +56,12 @@ h1 {
     background: rgb(230, 73, 73);
     color:#fff;
 }
+
+.enlace {
+    color:rgb(49, 155, 241);    
+}
+
+.error-message {
+    margin-bottom:10px;
+    
+}
