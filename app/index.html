@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron App Links</title>
+    <script src="https://kit.fontawesome.com/067b5b6486.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1> <i class="fas fa-link"></i > Mis enlaces Favoritos | ElectronJS </h1>
+        <div class="error-message"></div>
+        <section class="add-new-link-section">
+            <form class="new-link-form">
+                <input type="url" class="input-new-link-url" placeholder="URL" size="100" required autofocus>
+                <button type="submit" class="btn btn-new-link-disabled" id="btn-new-link" disabled>
+                    <i class="fas fa-plus"></i>  Guardar enlace 
+                </button>
+            </form>
+        </section>
+        <section class="list-links"> </section>
+        <section class="controls">
+            <button class="btn btn-clear-storage">
+                <i class="far fa-trash-alt"></i>  Limpiar el almacenamiento
+            </button>
+        </section>
+    </div>
+
+    <script>
+        require('./renderer.js');
+    </script>
+</body>
+</html>
