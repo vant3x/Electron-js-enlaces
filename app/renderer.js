@@ -30,7 +30,7 @@ const getLinksStorage = () => {
 const createLinkElement = link => {
     return `
         <div>
-            <h3>${link.title}</h3>
+            <h3> <img src="https://s2.googleusercontent.com/s2/favicons?domain=${link.url}"> ${link.title}</h3>
             <p>
                 <a href="${link.url}" class="enlace">${link.url}</a>
             </p>
